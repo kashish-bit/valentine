@@ -14,12 +14,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #f4b183, #f7c59f);
+
+  /* Soft orange background (outside card) */
+  background: linear-gradient(135deg, #f4a261, #f6c28b);
 }
 
 .page {
   display: none;
-  background: rgba(255,255,255,0.92);
+
+  /* Baby pink card */
+  background: #ffd6e8;
+
   padding: 28px;
   border-radius: 22px;
   width: 330px;
@@ -41,14 +46,16 @@ button {
 }
 
 .chat { text-align: left; }
+
 .bubble {
-  background: #f1f1f1;
+  background: #fff0f7;
   padding: 10px 14px;
   border-radius: 15px;
   margin: 8px 0;
   width: fit-content;
 }
-.me { background: #ffd6dc; }
+
+.me { background: #ffb6d5; }
 
 .playful { animation: wiggle 2s infinite; }
 @keyframes wiggle {
@@ -56,40 +63,49 @@ button {
   50% { transform: translateX(4px); }
 }
 
+/* Hearts */
 .hearts span {
   position: fixed;
   bottom: -20px;
   font-size: 22px;
   animation: float 7s linear infinite;
 }
+
 @keyframes float {
   0% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-120vh); opacity: 0; }
 }
 
+/* Flowers */
 .flowers span {
   position: fixed;
   font-size: 18px;
   opacity: 0.7;
   animation: drift 12s linear infinite;
 }
+
 @keyframes drift {
   from { transform: translateY(0); }
   to { transform: translateY(-110vh); }
 }
 
-.result { margin-top: 15px; font-size: 1.2rem; }
+.result {
+  margin-top: 15px;
+  font-size: 1.2rem;
+}
 </style>
 </head>
 
 <body>
 
+<!-- Page 1 -->
 <div class="page active" id="page1">
   <h2>Hey you 💖</h2>
   <p>Before I ask you something important…</p>
   <button onclick="nextPage(2)">Next Page → 🎀</button>
 </div>
 
+<!-- Page 2 -->
 <div class="page" id="page2">
   <div class="chat">
     <div class="bubble me">Do you know what day is coming?</div>
@@ -102,6 +118,7 @@ button {
   </button>
 </div>
 
+<!-- Page 3 -->
 <div class="page" id="page3">
   <h3>
     U never ever fail to make me smile and u r always there for me when I need u.
@@ -115,8 +132,10 @@ button {
   <button class="playful" onclick="yes('I knew it 😌💞')">Of course 🥰</button>
 
   <div class="result" id="result"></div>
+
+  <!-- Teddy hug -->
   <img id="hugGif"
-       src="https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif"
+       src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
        style="display:none; width:200px; margin-top:15px;">
 </div>
 
@@ -150,6 +169,8 @@ function startHearts() {
   }, 400);
 }
 
+/* Flowers always */
+const flowers = document.getElementById('flowers');
 for(let i=0;i<25;i++){
   const f=document.createElement('span');
   f.innerText='🌸';
