@@ -8,42 +8,39 @@
 <style>
 body {
   margin: 0;
-  height: 100vh;
   font-family: Arial, sans-serif;
-  background-image: url("65e74683-17f3-4852-8a54-33a8a63e3d12.png");
-  background-size: cover;
-  background-position: center;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  background: linear-gradient(135deg, #f4b183, #f7c59f);
 }
 
 .page {
   display: none;
-  background: rgba(255,255,255,0.95);
-  padding: 26px;
+  background: rgba(255,255,255,0.92);
+  padding: 28px;
   border-radius: 22px;
-  width: 320px;
+  width: 330px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,.25);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
 }
 
-.page.active {
-  display: block;
-}
+.page.active { display: block; }
 
 button {
   margin-top: 20px;
-  padding: 12px 20px;
+  padding: 12px 22px;
   border: none;
   border-radius: 25px;
-  background: #e63946;
-  color: white;
   font-size: 1rem;
   cursor: pointer;
+  background: #e63946;
+  color: white;
 }
 
+.chat { text-align: left; }
 .bubble {
   background: #f1f1f1;
   padding: 10px 14px;
@@ -51,84 +48,114 @@ button {
   margin: 8px 0;
   width: fit-content;
 }
+.me { background: #ffd6dc; }
 
-.me {
-  background: #ffd6dc;
+.playful { animation: wiggle 2s infinite; }
+@keyframes wiggle {
+  0%,100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.hearts span {
+  position: fixed;
+  bottom: -20px;
+  font-size: 22px;
+  animation: float 7s linear infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
 }
 
 .flowers span {
   position: fixed;
   font-size: 18px;
-  animation: float 10s linear infinite;
   opacity: 0.7;
+  animation: drift 12s linear infinite;
+}
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-110vh); }
 }
 
-@keyframes float {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-120vh); }
-}
+.result { margin-top: 15px; font-size: 1.2rem; }
 </style>
 </head>
 
 <body>
 
-<div class="page active" id="p1">
+<div class="page active" id="page1">
   <h2>Hey you 💖</h2>
   <p>Before I ask you something important…</p>
-  <button onclick="go(2)">Next Page → 🎀</button>
+  <button onclick="nextPage(2)">Next Page → 🎀</button>
 </div>
 
-<div class="page" id="p2">
-  <div class="bubble me">Do you know what day is coming?</div>
-  <div class="bubble" id="msg2" style="display:none;">
-    I’ve been wanting to ask you something…
+<div class="page" id="page2">
+  <div class="chat">
+    <div class="bubble me">Do you know what day is coming?</div>
+    <div class="bubble" id="msg2" style="display:none;">
+      I’ve been wanting to ask you something…
+    </div>
   </div>
-  <button id="btn2" style="display:none;" onclick="go(3)">Tell me 👀</button>
+  <button id="tellBtn" style="display:none;" onclick="nextPage(3)">
+    Tell me 👀
+  </button>
 </div>
 
-<div class="page" id="p3">
+<div class="page" id="page3">
   <h3>
-    You never ever fail to make me smile and you’re always there for me when I need you…
+    U never ever fail to make me smile and u r always there for me when I need u.
     <br><br>
-    Will you be my Valentine? 💖
+    So I wanted to ask u this for a long time…
+    <br><br>
+    <strong>Will you be my Valentine?</strong> 💖
   </h3>
 
-  <button onclick="yesClicked()">YESSS 💕</button>
-  <button onclick="yesClicked()">Of course 🥰</button>
+  <button class="playful" onclick="yes('Best choice ever 😭💖')">YESSS 💕</button>
+  <button class="playful" onclick="yes('I knew it 😌💞')">Of course 🥰</button>
 
-  <div id="result" style="margin-top:20px;"></div>
+  <div class="result" id="result"></div>
+  <img id="hugGif"
+       src="https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif"
+       style="display:none; width:200px; margin-top:15px;">
 </div>
 
 <div class="flowers" id="flowers"></div>
+<div class="hearts" id="hearts"></div>
 
 <script>
-function go(n) {
+function nextPage(n) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('p' + n).classList.add('active');
+  document.getElementById('page'+n).classList.add('active');
 
   if (n === 2) {
-    setTimeout(() => {
-      document.getElementById('msg2').style.display = 'block';
-    }, 1500);
-
-    setTimeout(() => {
-      document.getElementById('btn2').style.display = 'block';
-    }, 3000);
+    setTimeout(() => msg2.style.display='block', 2000);
+    setTimeout(() => tellBtn.style.display='block', 3500);
   }
 }
 
-function yesClicked() {
-  document.getElementById('result').innerHTML =
-    "Best choice ever 😭💖<br><br><img src='https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif' width='180'>";
+function yes(text) {
+  document.getElementById('result').innerText = "🎉 " + text + " 🎉";
+  document.getElementById('hugGif').style.display = 'block';
+  startHearts();
 }
 
-// floating lilac flowers
-const flowers = document.getElementById('flowers');
-for (let i = 0; i < 25; i++) {
-  const f = document.createElement('span');
-  f.innerText = '🌸';
-  f.style.left = Math.random() * 100 + 'vw';
-  f.style.animationDuration = (6 + Math.random() * 6) + 's';
+function startHearts() {
+  setInterval(() => {
+    const h = document.createElement('span');
+    h.innerText = '💖';
+    h.style.left = Math.random()*100+'vw';
+    document.getElementById('hearts').appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  }, 400);
+}
+
+for(let i=0;i<25;i++){
+  const f=document.createElement('span');
+  f.innerText='🌸';
+  f.style.left=Math.random()*100+'vw';
+  f.style.bottom=Math.random()*100+'vh';
+  f.style.animationDuration=8+Math.random()*6+'s';
   flowers.appendChild(f);
 }
 </script>
