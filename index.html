@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -8,13 +15,8 @@ body {
   justify-content: center;
   align-items: center;
 
-  /* Soft light orange background */
-  background: linear-gradient(
-    135deg,
-    #ffb070,
-    #ffd1a3
-  );
-
+  /* soft light orange background */
+  background: linear-gradient(135deg, #ffb347, #ffd194);
   transition: background 0.8s ease;
 }
 
@@ -42,7 +44,6 @@ button {
 }
 
 .chat { text-align: left; }
-
 .bubble {
   background: #f1f1f1;
   padding: 10px 14px;
@@ -50,11 +51,9 @@ button {
   margin: 8px 0;
   width: fit-content;
 }
-
 .me { background: #ffd6dc; }
 
 .playful { animation: wiggle 2s infinite; }
-
 @keyframes wiggle {
   0%,100% { transform: translateX(0); }
   50% { transform: translateX(4px); }
@@ -67,7 +66,6 @@ button {
   font-size: 22px;
   animation: float 7s linear infinite;
 }
-
 @keyframes float {
   0% { transform: translateY(0); opacity: 1; }
   100% { transform: translateY(-120vh); opacity: 0; }
@@ -80,7 +78,6 @@ button {
   opacity: 0.7;
   animation: drift 12s linear infinite;
 }
-
 @keyframes drift {
   from { transform: translateY(0); }
   to { transform: translateY(-110vh); }
@@ -91,3 +88,39 @@ button {
   font-size: 1.2rem;
 }
 </style>
+</head>
+
+<body>
+
+<!-- Page 1 -->
+<div class="page active" id="page1">
+  <h2>Hey you 💖</h2>
+  <p>Before I ask you something important…</p>
+  <button onclick="nextPage(2)">Next Page → 🎀</button>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="page2">
+  <div class="chat">
+    <div class="bubble me">Do you know what day is coming?</div>
+    <div class="bubble" id="msg2" style="display:none;">
+      I’ve been wanting to ask you something…
+    </div>
+  </div>
+  <button id="tellBtn" style="display:none;" onclick="nextPage(3)">
+    Tell me 👀
+  </button>
+</div>
+
+<!-- Page 3 -->
+<div class="page" id="page3">
+  <h3>
+    U never ever fail to make me smile and u r always there for me when I need u.
+    <br><br>
+    So I wanted to ask u this for a long time…
+    <br><br>
+    <strong>Will you be my Valentine?</strong> 💖
+  </h3>
+
+  <button class="playful" onclick="yes('Best choice ever 😭💖')">YESSS 💕</button>
+  <button class="
