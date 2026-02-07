@@ -4,31 +4,31 @@
 <meta charset="UTF-8">
 <title>Valentine 💖</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: Arial, sans-serif;
   height: 100vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #ffb703, #ffd6a5);
+  transition: background 0.8s ease;
 }
 
 .page {
   display: none;
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  width: 320px;
+  background: rgba(255,255,255,0.95);
+  padding: 28px;
+  border-radius: 22px;
+  width: 330px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 25px 45px rgba(0,0,0,0.25);
 }
 
-.page.active {
-  display: block;
-}
+.page.active { display: block; }
 
 button {
   margin-top: 20px;
@@ -41,52 +41,61 @@ button {
   color: white;
 }
 
-.chat {
-  text-align: left;
-}
-
+.chat { text-align: left; }
 .bubble {
   background: #f1f1f1;
   padding: 10px 14px;
   border-radius: 15px;
   margin: 8px 0;
   width: fit-content;
-  max-width: 90%;
 }
+.me { background: #ffd6dc; }
 
-.me {
-  background: #ffd6dc;
-}
-
-.hearts span {
-  position: fixed;
-  bottom: -20px;
-  font-size: 20px;
-  animation: float 8s linear infinite;
-}
-
-@keyframes float {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-110vh); opacity: 0; }
-}
-
-.playful {
-  animation: wiggle 2s infinite;
-}
-
+.playful { animation: wiggle 2s infinite; }
 @keyframes wiggle {
   0%,100% { transform: translateX(0); }
   50% { transform: translateX(4px); }
 }
 
-.confetti {
+/* Hearts (only after yes) */
+.hearts span {
+  position: fixed;
+  bottom: -20px;
   font-size: 22px;
-  margin-top: 15px;
+  animation: float 7s linear infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Lilac flowers */
+.flowers span {
+  position: fixed;
+  font-size: 18px;
+  opacity: 0.7;
+  animation: drift 12s linear infinite;
+}
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-110vh); }
+}
+
+.result { margin-top: 15px; font-size: 1.2rem; }
+
+/* Background images per page */
+.bg1 { background-image: url('https://i.imgur.com/0Z8FQYQ.png'); }
+.bg2 { background-image: url('https://i.imgur.com/LQKQZ8M.png'); }
+.bg3 { background-image: url('https://i.imgur.com/4AiXzf8.png'); }
+
+body.bg1, body.bg2, body.bg3 {
+  background-size: cover;
+  background-position: center;
 }
 </style>
 </head>
 
-<body>
+<body class="bg1">
 
 <!-- Page 1 -->
 <div class="page active" id="page1">
@@ -103,7 +112,7 @@ button {
       I’ve been wanting to ask you something…
     </div>
   </div>
-  <button onclick="nextPage(3)" style="display:none;" id="tellBtn">
+  <button id="tellBtn" style="display:none;" onclick="nextPage(3)">
     Tell me 👀
   </button>
 </div>
@@ -121,41 +130,52 @@ button {
   <button class="playful" onclick="yes('Best choice ever 😭💖')">YESSS 💕</button>
   <button class="playful" onclick="yes('I knew it 😌💞')">Of course 🥰</button>
 
-  <div class="confetti" id="result"></div>
+  <div class="result" id="result"></div>
+  <img id="hugGif" src="https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif"
+       style="display:none; width:200px; margin-top:15px;">
 </div>
 
+<div class="flowers" id="flowers"></div>
 <div class="hearts" id="hearts"></div>
 
 <script>
 function nextPage(n) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page' + n).classList.add('active');
+  document.getElementById('page'+n).classList.add('active');
+
+  document.body.className = 'bg'+n;
 
   if (n === 2) {
-    setTimeout(() => {
-      document.getElementById('msg2').style.display = 'block';
-    }, 2000);
-
-    setTimeout(() => {
-      document.getElementById('tellBtn').style.display = 'block';
-    }, 3500);
+    setTimeout(() => msg2.style.display='block', 2000);
+    setTimeout(() => tellBtn.style.display='block', 3500);
   }
 }
 
 function yes(text) {
-  document.getElementById('result').innerText = "🎉🎉 " + text + " 🎉🎉";
+  document.getElementById('result').innerText = "🎉 " + text + " 🎉";
+  document.getElementById('hugGif').style.display = 'block';
+  startHearts();
 }
 
-function createHearts() {
-  const heart = document.createElement('span');
-  heart.innerText = '💖';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.animationDuration = 5 + Math.random() * 5 + 's';
-  document.getElementById('hearts').appendChild(heart);
-  setTimeout(() => heart.remove(), 8000);
+function startHearts() {
+  setInterval(() => {
+    const h = document.createElement('span');
+    h.innerText = '💖';
+    h.style.left = Math.random()*100+'vw';
+    document.getElementById('hearts').appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  }, 400);
 }
 
-setInterval(createHearts, 500);
+/* Lilac flowers always */
+for(let i=0;i<25;i++){
+  const f=document.createElement('span');
+  f.innerText='🌸';
+  f.style.left=Math.random()*100+'vw';
+  f.style.bottom=Math.random()*100+'vh';
+  f.style.animationDuration=8+Math.random()*6+'s';
+  flowers.appendChild(f);
+}
 </script>
 
 </body>
