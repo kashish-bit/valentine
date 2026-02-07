@@ -14,10 +14,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* soft light orange background */
   background: linear-gradient(135deg, #ffb347, #ffd194);
-  transition: background 0.8s ease;
 }
 
 .page {
@@ -59,7 +56,7 @@ button {
   50% { transform: translateX(4px); }
 }
 
-/* Hearts (only after yes) */
+/* Hearts */
 .hearts span {
   position: fixed;
   bottom: -20px;
@@ -67,11 +64,10 @@ button {
   animation: float 7s linear infinite;
 }
 @keyframes float {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-120vh); opacity: 0; }
+  to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* Lilac flowers */
+/* Flowers */
 .flowers span {
   position: fixed;
   font-size: 18px;
@@ -79,7 +75,6 @@ button {
   animation: drift 12s linear infinite;
 }
 @keyframes drift {
-  from { transform: translateY(0); }
   to { transform: translateY(-110vh); }
 }
 
@@ -123,4 +118,24 @@ button {
   </h3>
 
   <button class="playful" onclick="yes('Best choice ever 😭💖')">YESSS 💕</button>
-  <button class="
+  <button class="playful" onclick="yes('I knew it 😌💞')">Of course 🥰</button>
+
+  <div class="result" id="result"></div>
+
+  <img id="hugGif"
+    src="https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif"
+    style="display:none; width:200px; margin-top:15px;">
+</div>
+
+<div class="flowers" id="flowers"></div>
+<div class="hearts" id="hearts"></div>
+
+<script>
+const flowers = document.getElementById('flowers');
+const hearts = document.getElementById('hearts');
+
+function nextPage(n) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+
+  if (n === 2) {
