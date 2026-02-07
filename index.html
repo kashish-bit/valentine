@@ -139,3 +139,37 @@ function nextPage(n) {
   document.getElementById('page'+n).classList.add('active');
 
   if (n === 2) {
+    setTimeout(() => msg2.style.display='block', 2000);
+    setTimeout(() => tellBtn.style.display='block', 3500);
+  }
+}
+
+function yes(text) {
+  result.innerText = "🎉 " + text + " 🎉";
+  hugGif.style.display = 'block';
+  startHearts();
+}
+
+function startHearts() {
+  setInterval(() => {
+    const h = document.createElement('span');
+    h.innerText = '💖';
+    h.style.left = Math.random()*100+'vw';
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  }, 400);
+}
+
+/* flowers always */
+for(let i=0;i<25;i++){
+  const f = document.createElement('span');
+  f.innerText = '🌸';
+  f.style.left = Math.random()*100+'vw';
+  f.style.bottom = Math.random()*100+'vh';
+  f.style.animationDuration = 8 + Math.random()*6 + 's';
+  flowers.appendChild(f);
+}
+</script>
+
+</body>
+</html>
